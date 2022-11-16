@@ -1,9 +1,9 @@
 <?php
 //Variaveis de configurações globais do arquivo
-$host = "repositorio-tcc.cmp8dvmif9dy.us-east-1.rds.amazonaws.com";
+$host = "localhost";
 $db   = "repositorio_tcc";
-$user = "admin";
-$pass = "teste0123";
+$user = "root";
+$pass = "";
 $url  = "http://localhost";
 
 // conecta ao banco de dados
