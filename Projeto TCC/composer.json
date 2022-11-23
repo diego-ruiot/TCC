@@ -1,0 +1,17 @@
+{
+    "name": "diegogolion/projeto-tcc",
+    "type": "function",
+    "description": "Load composer file",
+    "autoload": {
+        "files": [
+            "/app/helpers.php"
+        ],
+        "psr-4": {
+            "Tcc\\App\\": "/app/",
+            "Tcc\\App\\Bases\\": "/app/bases/",
+            "Tcc\\Models\\": "/models/",
+            "Tcc\\Views\\": "/views/",
+            "Tcc\\Controllers\\": "/controllers/"
+        }
+    }
+}
