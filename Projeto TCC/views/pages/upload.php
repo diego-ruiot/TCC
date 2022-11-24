@@ -15,10 +15,32 @@
 
             <main class="px-3 h-100 d-inline-flex align-items-center">
                 <div class="w-100">
+                    <div class="container">
+                        <?php if (isset($success) || isset($failed)) { ?>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-8 mb-3">
+                                <?php if (isset($success) && $success) { ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Sucesso!</strong> Seu arquivo de TCC foi enviado para nós e agora faz parte do nosso repositório, muito obrigado por contribuir!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php 
+                                    } 
+                                    if (isset($failed) && $failed) {
+                                ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Erro!</strong> Por algum motivo desconhecido, seu arquivo não pode ser enviado para nosso sistema, tente novamente em alguns minutos!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
                     <h1>Enviar Arquivo</h1>
                     <div class="container">
-                        <form method="POST" action="/upload">
-                        <div class="row justify-content-center">
+                        <form method="POST" action="/upload" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
                                 <div class="col-12 col-md-6 col-lg-4 text-start">
                                     <label class="form-label" for="autor">Autor</label>
                                     <input class="form-control form-control-lg mb-3" type="text" id="autor" name="autor" placeholder="Autor" required>
