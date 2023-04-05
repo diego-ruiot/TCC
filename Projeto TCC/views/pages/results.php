@@ -5,13 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Repositório - Procurar</title>
-        <?php view("includes.header_includes"); ?>
+        <?php view("includes.header_includes"); ?> <!-- Inclui o css em bootstrap a página: header_includes.php -->
     </head>
     <body class="d-flex h-100 text-center text-bg-dark">
         <span id="warning-container"><i data-reactroot=""></i></span>
     
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <?php view("includes.navbar", ["page" => ""]); ?>
+            <?php view("includes.navbar", ["page" => ""]); ?> <!-- Inclui o cabeçalho pelo arquivo navbar.php -->
 
             <main class="px-3 h-100 mt-3">
                 <div class="w-100">
@@ -20,7 +20,7 @@
                         <form method="GET" action="/results">
                             <div class="row justify-content-center">
                                 <div class="col-12">
-                                    <table class="table table-dark table-hover">
+                                    <table class="table table-dark table-hover"> <!-- Tabela de resultados conseguidos pelo método GET -->
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -34,6 +34,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <!-- Quando são encontrados resultados no banco de dados, são informados na tabela os registros dele-->
                                         <?php 
                                             if (isset($results) && (sizeof($results) > 0)) {
                                                 foreach($results as $result) {
@@ -73,6 +74,6 @@
             </main>
         </div>
         
-        <?php view("includes.footer_includes"); ?>
+        <?php view("includes.footer_includes"); ?> <!-- Inclui o rodapé pelo arquivo footer_includes.php -->
     </body>
 </html>

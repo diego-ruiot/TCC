@@ -5,19 +5,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Repositório - Pesquisa Avançada</title>
-        <?php view("includes.header_includes"); ?>
+        <?php view("includes.header_includes"); ?> <!-- Inclui o css em bootstrap a página -->
     </head>
     <body class="d-flex h-100 text-center text-bg-dark">
         <span id="warning-container"><i data-reactroot=""></i></span>
     
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <?php view("includes.navbar", ["page" => "advanced_search"]); ?>
+            <?php view("includes.navbar", ["page" => "advanced_search"]); ?> <!-- Inclui o cabeçalho pelo arquivo navbar.php -->
 
             <main class="px-3 h-100 d-inline-flex align-items-center">
                 <div class="w-100">
                     <h1>Pesquisa Avançada</h1>
                     <div class="container">
-                        <form method="GET" action="/results">
+                        
+                        <form method="GET" action="/results"> <!-- Formulário de pesquisa avançada, enviado à página de resultados em results.php pelo método GET -->
                             <div class="row justify-content-center">
                                 <div class="col-12 col-md-6 col-lg-4 text-start">
                                     <label class="form-label" for="autor">Autor</label>
@@ -51,6 +52,6 @@
             </main>
         </div>
         
-        <?php view("includes.footer_includes"); ?>
+        <?php view("includes.footer_includes"); ?> <!-- Inclui o rodapé pelo arquivo footer_includes.php -->
     </body>
 </html>

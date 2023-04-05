@@ -39,7 +39,7 @@
                     </div>
                     <h1>Enviar Arquivo</h1>
                     <div class="container">
-                        <form method="POST" action="/upload" enctype="multipart/form-data">
+                        <form method="POST" action="/upload" enctype="multipart/form-data"> <!-- Formulário de upload, enviado pelo método POST -->
                             <div class="row justify-content-center">
                                 <div class="col-12 col-md-6 col-lg-4 text-start">
                                     <label class="form-label" for="autor">Autor</label>
@@ -89,6 +89,6 @@
             </main>
         </div>
         
-        <?php view("includes.footer_includes"); ?>
+        <?php view("includes.footer_includes"); ?> <!-- Inclui o rodapé pelo arquivo footer_includes.php -->
     </body>
 </html>
