@@ -34,54 +34,54 @@ class BaseModel
     /**
      * @var \PDO
      */
-    public static $_db; // all models inherit this db connection
-    // but can overide in a sub-class by calling subClass::connectDB(...)
-    // sub class must also redeclare public static $_db;
+    public static $_db; /* Todos os modelos herdam esta conexão ao banco de dados mas pode ser substituida em uma subclasse, chamando subClass::connectDB(...)
+    A subclasse também deve redeclarar public static $_db;
+    */
 
     /**
      * @var \PDOStatement[]
      */
-    protected static $_stmt = array(); // prepared statements cache
+    protected static $_stmt = array(); // Cache de declarações preparadas
 
     /**
      * @var string
      */
-    protected static $_identifier_quote_character; // character used to quote table & columns names
+    protected static $_identifier_quote_character; // Caractere usado para citar nomes de tabelas e colunas
 
     /**
      * @var array
      */
-    private static $_tableColumns = array(); // columns in database table populated dynamically
-    // objects public members are created for each table columns dynamically
+    private static $_tableColumns = array(); // Colunas na tabela do banco de dados serão "populadas" automaticamente.
+    // Os membros públicos dos objetos são criados para cada coluna de tabela dinâmicamente
 
     /**
-     * @var \stdClass all data is stored here
+     * @var \stdClass Todos os dados são armazenados aqui
      */
     protected $data;
 
     /**
-     * @var \stdClass whether a field value has changed (become dirty) is stored here
+     * @var \stdClass Se um um valor de campo foi alterado (tornado sujo/dirty), é armazenado aqui
      */
     protected $dirty;
 
     /**
-     * @var string primary key column name, set as appropriate in your sub-class
+     * @var string Nome da coluna de chave primária, definido apropriadamente na sua subclasse
      */
-    protected static $_primary_column_name = 'id'; // primary key column
+    protected static $_primary_column_name = 'id'; // Coluna de chave primária(primary key)
 
     /**
-     * @var string database table name, set as appropriate in your sub-class
+     * @var string Nome da tabela do banco de dados, definido apropriadamente na sua subclasse
      */
     protected static $_tableName = '_the_db_table_name_'; // database table name
 
     /**
-     * Model constructor.
+     * Construtor de Modelo/Model
      *
      * @param array $data
      */
     public function __construct($data = array())
     {
-        static::getFieldnames(); // only called once first time an object is created
+        static::getFieldnames(); // Chamado apenas uma vez, na primera vez em que um objeto é criado. Chama a função que 
         $this->clearDirtyFields();
         if (is_array($data)) {
             $this->hydrate($data);
@@ -89,7 +89,7 @@ class BaseModel
     }
 
     /**
-     * check if this object has data attached
+     * Checa se este objeto possui dados anexados
      *
      * @return bool
      */
@@ -100,7 +100,7 @@ class BaseModel
 
 
     /**
-     * Returns true if data present else throws an Exception
+     * Retorna verdadeiro se dados presentes, se não lança uma Exception
      *
      * @return bool
      * @throws \Exception
@@ -115,8 +115,8 @@ class BaseModel
     }
 
     /**
-     * Set field in data object if doesnt match a native object member
-     * Initialise the data store if not an object
+     * Define campo em objeto de dado se não corresponde a um membro nativo do objeto
+     * Inicializa o armazenamento de dados se não for um objeto
      *
      * @param string $name
      * @param mixed  $value
@@ -133,17 +133,17 @@ class BaseModel
     }
 
     /**
-     * Mark the field as dirty, so it will be set in inserts and updates
+     * Marca o campo como "sujo"(dirty), portanto isto será definido em inserções e atualizações
      *
      * @param string $name
      */
     public function markFieldDirty($name)
     {
-        $this->dirty->$name = true; // field became dirty
+        $this->dirty->$name = true; // Campo se tornou "sujo"(dirty)
     }
 
     /**
-     * Return true if filed is dirty else false
+     * Retorna verdadeiro se preenchido como dirty, se não, falso
      *
      * @param string $name
      *
@@ -155,7 +155,7 @@ class BaseModel
     }
 
     /**
-     * resets what fields have been considered dirty ie. been changed without being saved to the db
+     * Redefine quais campos foram considerados dirty, ie.(ou seja), foram alterados sem serem salvos no banco de dados 
      */
     public function clearDirtyFields()
     {
@@ -163,8 +163,8 @@ class BaseModel
     }
 
     /**
-     * Try and get the object member from the data object
-     * if it doesnt match a native object member
+     * Tenta e obtém o membro objeto do objeto de dados
+     * se não corresponder a um membro nativo do objeto
      *
      * @param string $name
      *
@@ -191,8 +191,8 @@ class BaseModel
     }
 
     /**
-     * Test the existence of the object member from the data object
-     * if it doesnt match a native object member
+     * Testa a existencia do membro objeto do objeto de dados
+     * se não corresponder ao membro nativo do objeto
      *
      * @param string $name
      *
@@ -208,10 +208,10 @@ class BaseModel
     }
 
     /**
-     * set the db connection for this and all sub-classes to use
-     * if a sub class overrides $_db it can have it's own db connection if required
-     * params are as new PDO(...)
-     * set PDO to throw exceptions on error
+     * Define a conexão com o banco de dados para essa e todas as subclasses usarem
+     * se uma subclasse substituir $_db, ela pode ter a própria conexão com o banco de dados, se necessário
+     * os parâmetros são como em new PDO(...)
+     * define PDO para lançar "excessões"(Exceptions) em caso de erro
      *
      * @param string $dsn
      * @param string $username
@@ -223,13 +223,13 @@ class BaseModel
     public static function connectDb($dsn, $username, $password, $driverOptions = array())
     {
         static::$_db = new \PDO($dsn, $username, $password, $driverOptions);
-        static::$_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // Set Errorhandling to Exception
+        static::$_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // Define "tratamento de erros"(Errorhandling) para "exceção"(Exception)
         static::_setup_identifier_quote_character();
     }
 
     /**
-     * Detect and initialise the character used to quote identifiers
-     * (table names, column names etc).
+     * Detecta e inicializa o caractere usado para citar identificadores
+     * (nomes de tabelas, nomes de colunas, etc.)
      *
      * @return void
      * @throws \Exception
@@ -242,8 +242,8 @@ class BaseModel
     }
 
     /**
-     * Return the correct character used to quote identifiers (table
-     * names, column names etc) by looking at the driver being used by PDO.
+     * Retorna o caractere correto usado para citar identificadores
+     * (nomes de tabelas, nomes de colunas, etc.) verificando o driver sendo usado pelo PDO.
      *
      * @return string
      * @throws \Exception
@@ -266,7 +266,7 @@ class BaseModel
     }
 
     /**
-     * return the driver name for the current database connection
+     * Retorna o nome do driver para a conexão de base de dados atual
      *
      * @return string
      * @throws \Exception
@@ -280,9 +280,9 @@ class BaseModel
     }
 
     /**
-     * Quote a string that is used as an identifier
-     * (table names, column names etc). This method can
-     * also deal with dot-separated identifiers eg table.column
+     * Cita uma string que é usada como identificadorQuote a string that is used as an identifier
+     * (nomes de tabelas, nomes de colunas, etc.). 
+     * Esse metodo também pode lidar com identificadores separados por pontuação, eg.(por exemplo) 'table.column'
      *
      * @param string $identifier
      *
@@ -301,9 +301,9 @@ class BaseModel
 
 
     /**
-     * This method performs the actual quoting of a single
-     * part of an identifier, using the identifier quote
-     * character specified in the config (or autodetected).
+     * Esse método performa a citação atual de uma única 
+     * parte de um identificador, usando o caractere de citação do identificador
+     * especificado na configuração (ou autodetectado)
      *
      * @param string $part
      *
@@ -318,9 +318,9 @@ class BaseModel
     }
 
     /**
-     * Get and cache on first call the column names assocaited with the current table
+     * Obtém e armazena em cache na primeira chamada os nomes das colunas associadas à tabela atual
      *
-     * @return array of column names for the current table
+     * @return array dos nomes das colunas para a tabela atual
      */
     protected static function getFieldnames()
     {
@@ -333,9 +333,9 @@ class BaseModel
     }
 
     /**
-     * Given an associative array of key value pairs
-     * set the corresponding member value if associated with a table column
-     * ignore keys which dont match a table column name
+     * Dados um array associativo dos pares de valores de chave
+     * define o valor do membro correspondente se associado com uma coluna de tabela
+     * ignora chaves que não correspondem a um nome de coluna de tabela
      *
      * @return void
      */
@@ -344,14 +344,14 @@ class BaseModel
         foreach (static::getFieldnames() as $fieldname) {
             if (isset($data[$fieldname])) {
                 $this->$fieldname = $data[$fieldname];
-            } else if (!isset($this->$fieldname)) { // PDO pre populates fields before calling the constructor, so dont null unless not set
+            } else if (!isset($this->$fieldname)) { // PDO pré popula os campos antes de chamar o constructor, então não nulifique a menos que não estejam definidos
                 $this->$fieldname = null;
             }
         }
     }
 
     /**
-     * set all members to null that are associated with table columns
+     * define todos os membros para null que
      *
      * @return void
      */
@@ -384,7 +384,7 @@ class BaseModel
     }
 
     /**
-     * Get the record with the matching primary key
+     * Obtém o registro com a a chave primária correspondente
      *
      * @param string $id
      *
@@ -396,7 +396,7 @@ class BaseModel
     }
 
     /**
-     * Get the first record in the table
+     * Obtém o primeiro registro na tabela Get the first record in the table
      *
      * @return Object
      */
@@ -406,7 +406,7 @@ class BaseModel
     }
 
     /**
-     * Get the last record in the table
+     * Obtém o último registro na tabela
      *
      * @return Object
      */
@@ -416,11 +416,11 @@ class BaseModel
     }
 
     /**
-     * Find records with the matching primary key
+     * Encontra os registros com a chave primária correspondente
      *
      * @param string $id
      *
-     * @return object[] of objects for matching records
+     * @return object[] de objetos para registros correspondentes
      */
     static public function find($id)
     {
@@ -429,7 +429,8 @@ class BaseModel
     }
 
     /**
-     * handles calls to non-existant static methods, used to implement dynamic finder and counters ie.
+     * resolve chamadas para métodos estáticos não existentes, usado para implementar 
+     * buscadores e contadores dinâmicos, ie.(ou seja),
      *  find_by_name('tom')
      *  find_by_title('a great book')
      *  count_by_name('tom')
@@ -443,30 +444,30 @@ class BaseModel
      */
     static public function __callStatic($name, $arguments)
     {
-        // Note: value of $name is case sensitive.
+        // Nota: Valor de $name é case sensitive.
         if (preg_match('/^find_by_/', $name) == 1) {
-            // it's a find_by_{fieldname} dynamic method
+            // Esse é um método dinâmico de find_by_{fieldname}
             $fieldname = substr($name, 8); // remove find by
             $match     = $arguments[0];
             return static::fetchAllWhereMatchingSingleField($fieldname, $match);
         } else if (preg_match('/^findOne_by_/', $name) == 1) {
-            // it's a findOne_by_{fieldname} dynamic method
-            $fieldname = substr($name, 11); // remove findOne_by_
+            // Esse é um método dinâmico de findOne_by_{fieldname}
+            $fieldname = substr($name, 11); // remove 'findOne_by_'
             $match     = $arguments[0];
             return static::fetchOneWhereMatchingSingleField($fieldname, $match, 'ASC');
         } else if (preg_match('/^first_by_/', $name) == 1) {
-            // it's a first_by_{fieldname} dynamic method
-            $fieldname = substr($name, 9); // remove first_by_
+            // Esse é um método dinâmico de first_by_{fieldname}
+            $fieldname = substr($name, 9); // remove 'first_by_'
             $match     = $arguments[0];
             return static::fetchOneWhereMatchingSingleField($fieldname, $match, 'ASC');
         } else if (preg_match('/^last_by_/', $name) == 1) {
-            // it's a last_by_{fieldname} dynamic method
-            $fieldname = substr($name, 8); // remove last_by_
+            // Esse é um método dinâmico de last_by_{fieldname}
+            $fieldname = substr($name, 8); // remove 'last_by_'
             $match     = $arguments[0];
             return static::fetchOneWhereMatchingSingleField($fieldname, $match, 'DESC');
         } else if (preg_match('/^count_by_/', $name) == 1) {
-            // it's a count_by_{fieldname} dynamic method
-            $fieldname = substr($name, 9); // remove find by
+            // Esse é um método dinâmico de count_by_{fieldname}
+            $fieldname = substr($name, 9); // remove 'find by'
             $match     = $arguments[0];
             if (is_array($match)) {
                 return static::countAllWhere(static::_quote_identifier($fieldname) . ' IN (' . static::createInClausePlaceholders($match) . ')', $match);
@@ -478,7 +479,7 @@ class BaseModel
     }
 
     /**
-     * find one match based on a single field and match criteria
+     * encontra uma correspondencia baseada em um único campo e critério de correspondência
      *
      * @param string       $fieldname
      * @param string|array $match
@@ -497,12 +498,12 @@ class BaseModel
 
 
     /**
-     * find multiple matches based on a single field and match criteria
+     * Encontra múltiplas correspondências baseado em um único campo e critério de correspondência
      *
      * @param string       $fieldname
      * @param string|array $match
      *
-     * @return object[] of objects of calling class
+     * @return object[] de objetos da classe chamadora
      */
     public static function fetchAllWhereMatchingSingleField($fieldname, $match)
     {
@@ -514,7 +515,8 @@ class BaseModel
     }
 
     /**
-     * for a given array of params to be passed to an IN clause return a string placeholder
+     * para um dado array de parâmetros a ser passado para uma cláusula 'IN', 
+     * retorna um placeholder de string
      *
      * @param array $params
      *
@@ -526,7 +528,7 @@ class BaseModel
     }
 
     /**
-     * returns number of rows in the table
+     * Retorna o número de linhas na tabela
      *
      * @return int
      */
@@ -537,12 +539,15 @@ class BaseModel
     }
 
     /**
-     * returns an integer count of matching rows
+     * Retorna uma contagem INTeira de linhas correspondentes
      *
-     * @param string $SQLfragment conditions, grouping to apply (to right of WHERE keyword)
-     * @param array  $params      optional params to be escaped and injected into the SQL query (standrd PDO syntax)
+     * @param string $SQLfragment   condições e agrupamento para aplicar
+     *                              (à direita da palavra-chave WHERE) 
+     * 
+     * @param array  $params        parâmetros opcionais a serem escapados e
+     *                              injetados na consulta SQL(Sintaxe padrão do PDO) 
      *
-     * @return integer count of rows matching conditions
+     * @return integer contagem de linhas que correspondem às condições
      */
     static public function countAllWhere($SQLfragment = '', $params = array())
     {
@@ -552,7 +557,7 @@ class BaseModel
     }
 
     /**
-     * if $SQLfragment is not empty prefix with the WHERE keyword
+     * Se $SQLfragment não está vazio, insira como prefixo a palavra-chave WHERE
      *
      * @param string $SQLfragment
      *
@@ -562,7 +567,6 @@ class BaseModel
     {
         return $SQLfragment ? ' WHERE ' . $SQLfragment : $SQLfragment;
     }
-
 
     /**
      * returns an array of objects of the sub-class which match the conditions

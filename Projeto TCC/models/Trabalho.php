@@ -2,10 +2,11 @@
 
 namespace Tcc\Models;
 
-use \Tcc\App\Bases\BaseModel; // Utiliza BaseModel.php para base de dados -->
+use \Tcc\App\Bases\BaseModel; // Inclui classe BaseModel
 
+/* Define 'Trabalho' como a classe filha da classe BaseModel, e define a variavel estática "tableName" com o valor 'trabalhos' */
 class Trabalho extends BaseModel {
-    static protected $_tableName = 'trabalhos'; // Utiliza a tabela 'trabalhos' da base de dados utilizada
+    static protected $_tableName = 'trabalhos'; 
 }
 
 ?>

@@ -7,6 +7,7 @@ use \Tcc\Models\Trabalho;
 use \Tcc\App\PdfToText;
 use Exception;
 
+/* Cria classe TrabalhoController, filha da classe BaseController */
 class TrabalhoController extends BaseController {
     public static function index() {
         return view("pages.search");
@@ -31,6 +32,7 @@ class TrabalhoController extends BaseController {
             '%|%'. mb_convert_encoding($titulo, 'ISO-8859-1', 'UTF-8') .'%|%'
         ];
         
+        /* Caso tenha sido procurado um termo, faz com que a consulta busque todos os registros que possuam as palavras chaves */
         if ($termo !== "") {
             $primeira = true;
             $palavras = explode(' ', $termo);

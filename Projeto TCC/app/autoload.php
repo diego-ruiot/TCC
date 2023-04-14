@@ -1,7 +1,7 @@
 <?php
 
 namespace Tcc;
-
+/* Classe autoLoad entrega o diretório do objeto */
 class AutoLoad
 {
     public $dir;
@@ -26,6 +26,7 @@ class AutoLoad
         }
     }
     
+    /* Inclui os arquivos helpers.php e pdftotext.php ao autoload.php */
     public function loadFiles($files){
         foreach($files as $file){
             $fullpath = $this->dir."/".$file;
