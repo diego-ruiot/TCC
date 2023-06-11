@@ -396,7 +396,7 @@ class BaseModel
     }
 
     /**
-     * Obtém o primeiro registro na tabela Get the first record in the table
+     * Obtém o primeiro registro na tabela
      *
      * @return Object
      */
