@@ -87,8 +87,8 @@ class TrabalhoController extends BaseController {
 
     public static function insert() {
         $file = md5('zezin'.time()) .".pdf";
-        $root_path = __DIR__ . DIRECTORY_SEPARATOR. "..". DIRECTORY_SEPARATOR;
-        $filename = $root_path ."storage". DIRECTORY_SEPARATOR . "pdf" . DIRECTORY_SEPARATOR . $file;
+        $root_path = realpath(__DIR__ . DIRECTORY_SEPARATOR. "..". DIRECTORY_SEPARATOR);
+        $filename = $root_path . DIRECTORY_SEPARATOR ."storage". DIRECTORY_SEPARATOR . "pdf" . DIRECTORY_SEPARATOR . $file;
         
         if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $filename)) {
             $pdf = new PdfToText($filename);
