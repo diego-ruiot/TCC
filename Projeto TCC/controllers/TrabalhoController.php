@@ -31,10 +31,18 @@ class TrabalhoController extends BaseController {
             '%|%'. mb_convert_encoding($titulo, 'ISO-8859-1', 'UTF-8') .'%|%'
         ];
         
-        if ($termo !== "") {
+        if (($termo == "") && ($geral != "")) {
+            $termo = $geral;
+        }
+        
+        if ($termo != "") {
             $primeira = true;
             $palavras = explode(' ', $termo);
-            $query .= PHP_EOL ." and (";
+            if ($termo == $geral) {
+                $query .= PHP_EOL ." or (";
+            } else {
+                $query .= PHP_EOL ." and (";
+            }
             foreach($palavras as $palavra) {
                 if (!$primeira) {
                     $query .= PHP_EOL ."or ";
@@ -45,7 +53,6 @@ class TrabalhoController extends BaseController {
             }
             $query .= PHP_EOL .")";
         }
-        
 
         $result = Trabalho::fetchAllWhere($query, $params);
         return view("pages.results", ['results' => $result]);
