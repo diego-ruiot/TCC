@@ -11,11 +11,7 @@
             "Tcc\\App\\Bases\\": "app/bases",
             "Tcc\\Models\\": "models",
             "Tcc\\Views\\": "views",
-            "Tcc\\Controllers\\": "controllers",
-            "Tcc\\APP\\": "app"
+            "Tcc\\Controllers\\": "controllers"
         }
-    },
-    "require": {
-        "smalot/pdfparser": "^2.10"
     }
 }

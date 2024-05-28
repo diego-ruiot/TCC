@@ -2,8 +2,6 @@
 
 namespace Tcc\App\Bases;
 
-use Exception;
-
 /**
  * Model ORM
  *
@@ -224,59 +222,9 @@ class BaseModel
      */
     public static function connectDb($dsn, $username, $password, $driverOptions = array())
     {
-        $error = false;
-        try {
-            static::$_db = new \PDO($dsn, $username, $password, $driverOptions);
-            static::$_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // Set Errorhandling to Exception
-            static::_setup_identifier_quote_character();    
-        } catch (Exception $e) {
-            if (str_contains($e->getMessage(), 'Unknown database')) {
-                $dbname = getDsnValue($dsn, 'dbname');
-                $newdsn = str_replace("dbname=$dbname", '', $dsn);
-                $pdo = new \PDO($newdsn, $username, $password, $driverOptions);
-                $pdo->query("CREATE DATABASE $dbname;") or die(var_dump($pdo->errorInfo(), true));
-                $pdo->query("USE $dbname;") or die(var_dump($pdo->errorInfo(), true));
-                $migrations = getAllMigration();
-                foreach ($migrations as $table) { 
-                    $sql_post = [];
-                    $sql = "CREATE TABLE `". $table["table_name"] ."` (". PHP_EOL;
-                    foreach ($table["columns"] as $col_name => $col_props) {
-                        $col_type = $col_props["type"];
-                        if (isset($col_props["size"])) {
-                            $col_type .= "(". $col_props["size"] .")";
-                        }
-
-                        $col_default = "";
-                        if (isset($col_props["default"])) {
-                            $col_default .= "DEFAULT ". $col_props["default"];
-                        }
-
-                        $col_not_null = "";
-                        if (isset($col_props["not_null"]) && $col_props["not_null"]) {
-                            $col_not_null .= "NOT NULL";
-                        }
-
-                        if(isset($col_props['auto_increment']) && $col_props["auto_increment"]) {
-                            array_push($sql_post, "ALTER TABLE `". $table["table_name"] ."` ADD PRIMARY KEY (`$col_name`);");
-                            array_push($sql_post, "ALTER TABLE `". $table["table_name"] ."` MODIFY `$col_name` $col_type $col_not_null $col_default AUTO_INCREMENT;");
-                        }
-
-                        $sql .= "`$col_name` $col_type $col_not_null $col_default,". PHP_EOL;
-                    }
-                    $sql = rtrim($sql, ",". PHP_EOL). PHP_EOL .") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;";
-
-                    $pdo->query($sql);
-                    foreach ($sql_post as $sql_exec) {
-                        $pdo->query($sql_exec);
-                    }
-                }
-                $error = true;
-            }
-        }
-
-        if ($error) {
-            static::connectDb($dsn, $username, $password, $driverOptions);
-        }
+        static::$_db = new \PDO($dsn, $username, $password, $driverOptions);
+        static::$_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // Set Errorhandling to Exception
+        static::_setup_identifier_quote_character();
     }
 
     /**
