@@ -5,7 +5,6 @@ namespace Tcc\Controllers;
 use \Tcc\App\Bases\BaseController;
 use \Tcc\Models\Trabalho;
 use \Tcc\App\PdfToText;
-use Exception;
 
 class TrabalhoController extends BaseController {
     public static function index() {
@@ -82,10 +81,20 @@ class TrabalhoController extends BaseController {
     }
 
     public static function upload() {
+        if (!($_SESSION["is_logged"] ?? false)) {
+            header("Location: /"); 
+            exit();
+        }
+        
         return view("pages.upload");
     }
 
     public static function insert() {
+        if (!($_SESSION["is_logged"] ?? false)) {
+            header("Location: /"); 
+            exit();
+        }
+
         $file = md5('zezin'.time()) .".pdf";
         $root_path = realpath(__DIR__ . DIRECTORY_SEPARATOR. "..". DIRECTORY_SEPARATOR);
         $filename = $root_path . DIRECTORY_SEPARATOR ."storage". DIRECTORY_SEPARATOR . "pdf" . DIRECTORY_SEPARATOR . $file;

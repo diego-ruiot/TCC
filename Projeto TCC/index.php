@@ -1,6 +1,8 @@
 <?php
 
 namespace Tcc;
+session_start();
+
 include(__DIR__."/app/autoload.php");
 
 $loader = new \Tcc\AutoLoad();

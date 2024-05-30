@@ -6,6 +6,7 @@ include(__DIR__."/router.php");
 use \Tcc\App\Bases\BaseModel;
 use \Tcc\App\Route;
 use \Tcc\Controllers\TrabalhoController;
+use Tcc\Controllers\UserController;
 
 BaseModel::connectDb('mysql:host=127.0.0.1;dbname=repositorio_tcc', 'root', '');
 
@@ -32,6 +33,30 @@ Route::add('/upload', function() {
 Route::add('/upload', function() {
   TrabalhoController::insert();
 }, 'post');
+
+Route::add('/login', function() {
+  UserController::login();
+}, 'get');
+
+Route::add('/login', function() {
+  UserController::post_login();
+}, 'post');
+
+Route::add('/register', function() {
+  UserController::register();
+}, 'get');
+
+Route::add('/register', function() {
+  UserController::post_register();
+}, 'post');
+
+Route::add('/logout', function() {
+  UserController::logout();
+}, 'get');
+
+Route::add('/my-files', function() {
+  UserController::my_files();
+}, 'get');
 
 // Run the router
 Route::run('/');

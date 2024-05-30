@@ -27,6 +27,7 @@ if (!function_exists('getDsnValue')) {
         return $result ? $matches[1] : $default;
     }
 }
+
 if (!function_exists('getAllMigration')) {
     function getAllMigration(): array {
         return [
@@ -77,6 +78,43 @@ if (!function_exists('getAllMigration')) {
                     "palavras" => [
                         "type"    => "longtext",
                         "default" => "NULL",
+                    ],
+                ]
+            ],
+            [
+                "table_name" => "usuarios",
+                "columns"    => [
+                    "id" => [
+                        "type"           => "bigint",
+                        "size"           => 20,
+                        "auto_increment" => true,
+                        "not_null"       => true,
+                    ],
+                    "email" => [
+                        "type"     => "varchar",
+                        "size"     => 255,
+                        "not_null" => true,
+                    ],
+                    "name" => [
+                        "type"     => "varchar",
+                        "size"     => 255,
+                        "not_null" => true,
+                    ],
+                    "campus_id" => [
+                        "type"     => "varchar",
+                        "size"     => 255,
+                        "not_null" => true,
+                    ],
+                    "password" => [
+                        "type"     => "varchar",
+                        "size"     => 255,
+                        "not_null" => true,
+                    ],
+                    "is_admin" => [
+                        "type"     => "tinyint",
+                        "size"     => 1,
+                        "not_null" => true,
+                        "default"  => "0",
                     ],
                 ]
             ],

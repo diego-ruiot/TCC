@@ -12,9 +12,23 @@
                 <li class="nav-item">
                     <a class="nav-link <?= (isset($page) && $page == "advanced_search") ? "active" : ""; ?>" href="/search">Pesquisa Avançada</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <?php if (!($_SESSION["is_logged"] ?? false)) { ?>
+                <li class="nav-item">
+                    <a class="nav-link <?= (isset($page) && $page == "login") ? "active" : ""; ?>" href="/login">Entrar</a>
+                </li>
+                <?php } else { ?>
                 <li class="nav-item">
                     <a class="nav-link <?= (isset($page) && $page == "upload") ? "active" : ""; ?>" href="/upload">Enviar TCC</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (isset($page) && $page == "my-files") ? "active" : ""; ?>" href="/my-files">Meus Documentos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (isset($page) && $page == "logout") ? "active" : ""; ?>" href="/logout">Sair</a>
+                </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
